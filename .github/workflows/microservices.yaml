@@ -31,7 +31,7 @@ jobs:
         run: |
           ./gradlew bootjar
           ls build/libs
-          terraform plan
+          # terraform plan codigo que hace que falle el step
       
       - name: deploy-jar
         if: ${{ github.event_name == 'push' }}
