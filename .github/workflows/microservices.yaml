@@ -1,5 +1,11 @@
 on:
   push:
+    branches: 
+      - main
+  
+  pull_request: 
+    branches: 
+      - main
 
 jobs:
   build-micro:
@@ -16,7 +22,16 @@ jobs:
 
       - run: java --version
 
-      - name: build-gradle
+      - name: gradle-test
         run: |
           chmod +x gradlew
+          ./gradlew test
+
+      - name: build-gradle
+        run: |
           ./gradlew bootjar
+          ls build/libs
+      
+      - name: deploy-jar
+        if: ${{ github.event_name == 'push' }}
+        run: echo 'Deploy jar'
